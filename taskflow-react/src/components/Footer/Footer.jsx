@@ -1,5 +1,11 @@
+import "./Footer.css";
+
 function Footer() {
-  return <footer>© 2026 TaskFlow</footer>;
+  return (
+    <footer className="footer">
+      © 2026 TaskFlow
+    </footer>
+  );
 }
 
 export default Footer;
