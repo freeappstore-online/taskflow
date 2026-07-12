@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -6,6 +8,17 @@ import TaskTable from "./components/TaskTable/TaskTable";
 import Footer from "./components/Footer/Footer";
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (newTask) => {
+    const taskWithId = {
+      id: Date.now(),
+      ...newTask,
+    };
+
+    setTasks((previousTasks) => [...previousTasks, taskWithId]);
+  };
+
   return (
     <>
       <Header />
@@ -14,9 +27,11 @@ function App() {
         <Sidebar />
 
         <main>
-          <Dashboard />
-          <TaskForm />
-          <TaskTable />
+          <Dashboard tasks={tasks} />
+
+          <TaskForm addTask={addTask} />
+
+          <TaskTable tasks={tasks} />
         </main>
       </div>
 
