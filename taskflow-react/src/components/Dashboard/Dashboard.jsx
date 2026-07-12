@@ -1,34 +1,58 @@
 import "./Dashboard.css";
 
-function Dashboard() {
-  return (
-    <section className="dashboard">
+import Card from "../Card/Card";
 
-      <h2>Dashboard</h2>
+import {
+    FaTasks,
+    FaCheckCircle,
+    FaClock,
+    FaExclamationTriangle
+} from "react-icons/fa";
 
-      <p>Welcome back, Reetu!</p>
+function Dashboard(){
 
-      <div className="cards">
+    return(
 
-        <div className="card">
-          <h3>Total Tasks</h3>
-          <p>12</p>
-        </div>
+<section className="dashboard">
 
-        <div className="card">
-          <h3>Completed</h3>
-          <p>7</p>
-        </div>
+<h2>Dashboard</h2>
 
-        <div className="card">
-          <h3>Pending</h3>
-          <p>5</p>
-        </div>
+<div className="cards">
 
-      </div>
+<Card
+title="Total Tasks"
+value="12"
+icon={<FaTasks />}
+color="#2563eb"
+/>
 
-    </section>
-  );
+<Card
+title="Completed"
+value="7"
+icon={<FaCheckCircle />}
+color="#16a34a"
+/>
+
+<Card
+title="Pending"
+value="4"
+icon={<FaClock />}
+color="#f59e0b"
+/>
+
+<Card
+title="High Priority"
+value="1"
+icon={<FaExclamationTriangle />}
+color="#dc2626"
+/>
+
+</div>
+
+</section>
+
+    );
+
 }
 
 export default Dashboard;
