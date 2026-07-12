@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./TaskForm.css";
 
-function TaskForm() {
+function TaskForm({ addTask }) {
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -15,8 +15,8 @@ function TaskForm() {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setTask((previousTask) => ({
-      ...previousTask,
+    setTask((prevTask) => ({
+      ...prevTask,
       [name]: value,
     }));
   };
@@ -24,7 +24,7 @@ function TaskForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(task);
+    addTask(task);
 
     setTask({
       title: "",
@@ -38,94 +38,92 @@ function TaskForm() {
   };
 
   return (
-    <section className="task-form-section">
+    <section className="task-form">
       <h2>Create New Task</h2>
 
       <form onSubmit={handleSubmit}>
-        <fieldset>
-          <legend>Task Details</legend>
+        <div className="form-grid">
+          <div>
+            <label>Task Title</label>
+            <input
+              type="text"
+              name="title"
+              value={task.title}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <label htmlFor="title">Task Title</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={task.title}
-            onChange={handleChange}
-            placeholder="Enter task title"
-            required
-            minLength={5}
-            maxLength={100}
-          />
+          <div>
+            <label>Assignee</label>
+            <input
+              type="text"
+              name="assignee"
+              value={task.assignee}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            value={task.description}
-            onChange={handleChange}
-            placeholder="Describe the task"
-            rows="4"
-            maxLength={500}
-          />
+          <div>
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={task.email}
+              onChange={handleChange}
+            />
+          </div>
 
-          <label htmlFor="priority">Priority</label>
-          <select
-            id="priority"
-            name="priority"
-            value={task.priority}
-            onChange={handleChange}
-          >
-            <option>High</option>
-            <option>Medium</option>
-            <option>Low</option>
-          </select>
+          <div>
+            <label>Due Date</label>
+            <input
+              type="date"
+              name="dueDate"
+              value={task.dueDate}
+              onChange={handleChange}
+            />
+          </div>
 
-          <label htmlFor="status">Status</label>
-          <select
-            id="status"
-            name="status"
-            value={task.status}
-            onChange={handleChange}
-          >
-            <option>To Do</option>
-            <option>In Progress</option>
-            <option>Completed</option>
-          </select>
+          <div>
+            <label>Priority</label>
 
-          <label htmlFor="dueDate">Due Date</label>
-          <input
-            type="date"
-            id="dueDate"
-            name="dueDate"
-            value={task.dueDate}
-            onChange={handleChange}
-            required
-          />
+            <select
+              name="priority"
+              value={task.priority}
+              onChange={handleChange}
+            >
+              <option>High</option>
+              <option>Medium</option>
+              <option>Low</option>
+            </select>
+          </div>
 
-          <label htmlFor="assignee">Assign To</label>
-          <input
-            type="text"
-            id="assignee"
-            name="assignee"
-            value={task.assignee}
-            onChange={handleChange}
-            placeholder="Enter assignee name"
-            required
-          />
+          <div>
+            <label>Status</label>
 
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={task.email}
-            onChange={handleChange}
-            placeholder="name@example.com"
-          />
+            <select
+              name="status"
+              value={task.status}
+              onChange={handleChange}
+            >
+              <option>To Do</option>
+              <option>In Progress</option>
+              <option>Completed</option>
+            </select>
+          </div>
+        </div>
 
-          <button type="submit">Create Task</button>
-        </fieldset>
+        <label>Description</label>
+
+        <textarea
+          rows="4"
+          name="description"
+          value={task.description}
+          onChange={handleChange}
+        />
+
+        <button>Create Task</button>
       </form>
     </section>
   );

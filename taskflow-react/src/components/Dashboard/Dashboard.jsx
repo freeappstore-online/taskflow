@@ -1,58 +1,52 @@
 import "./Dashboard.css";
-
 import Card from "../Card/Card";
 
-import {
-    FaTasks,
-    FaCheckCircle,
-    FaClock,
-    FaExclamationTriangle
-} from "react-icons/fa";
+function Dashboard({ tasks }) {
+  const total = tasks.length;
 
-function Dashboard(){
+  const completed = tasks.filter(
+    (task) => task.status === "Completed"
+  ).length;
 
-    return(
+  const pending = tasks.filter(
+    (task) => task.status !== "Completed"
+  ).length;
 
-<section className="dashboard">
+  const highPriority = tasks.filter(
+    (task) => task.priority === "High"
+  ).length;
 
-<h2>Dashboard</h2>
+  return (
+    <section className="dashboard">
+      <h2>Dashboard</h2>
 
-<div className="cards">
+      <div className="cards">
+        <Card
+          title="Total Tasks"
+          value={total}
+          color="#2563eb"
+        />
 
-<Card
-title="Total Tasks"
-value="12"
-icon={<FaTasks />}
-color="#2563eb"
-/>
+        <Card
+          title="Completed"
+          value={completed}
+          color="#16a34a"
+        />
 
-<Card
-title="Completed"
-value="7"
-icon={<FaCheckCircle />}
-color="#16a34a"
-/>
+        <Card
+          title="Pending"
+          value={pending}
+          color="#f59e0b"
+        />
 
-<Card
-title="Pending"
-value="4"
-icon={<FaClock />}
-color="#f59e0b"
-/>
-
-<Card
-title="High Priority"
-value="1"
-icon={<FaExclamationTriangle />}
-color="#dc2626"
-/>
-
-</div>
-
-</section>
-
-    );
-
+        <Card
+          title="High Priority"
+          value={highPriority}
+          color="#dc2626"
+        />
+      </div>
+    </section>
+  );
 }
 
 export default Dashboard;

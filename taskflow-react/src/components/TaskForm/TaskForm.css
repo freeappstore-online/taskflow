@@ -1,58 +1,38 @@
-.task-form-section {
-  background: #ffffff;
+.task-form {
+  background: white;
   padding: 25px;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-bottom: 30px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
-.task-form-section h2 {
-  margin-bottom: 20px;
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
-fieldset {
-  border: 1px solid #d1d5db;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-legend {
-  padding: 0 10px;
-  font-weight: bold;
-}
-
-label {
+.task-form label {
   display: block;
-  margin-top: 15px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-weight: 600;
 }
 
-input,
-textarea,
-select {
+.task-form input,
+.task-form select,
+.task-form textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 16px;
+  margin-bottom: 15px;
 }
 
-textarea {
-  resize: vertical;
-}
-
-button[type="submit"] {
-  margin-top: 20px;
-  padding: 12px 20px;
+.task-form button {
   background: #2563eb;
   color: white;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
+  padding: 12px 22px;
+  border-radius: 8px;
 }
 
-button[type="submit"]:hover {
+.task-form button:hover {
   background: #1d4ed8;
 }

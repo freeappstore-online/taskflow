@@ -10,28 +10,43 @@ import Footer from "./components/Footer/Footer";
 function App() {
   const [tasks, setTasks] = useState([]);
 
+  const [search, setSearch] = useState("");
+
   const addTask = (newTask) => {
-    const taskWithId = {
+    const task = {
       id: Date.now(),
       ...newTask,
     };
 
-    setTasks((previousTasks) => [...previousTasks, taskWithId]);
+    setTasks((previousTasks) => [...previousTasks, task]);
   };
+
+  const deleteTask = (id) => {
+    setTasks((previousTasks) =>
+      previousTasks.filter((task) => task.id !== id)
+    );
+  };
+
+  const filteredTasks = tasks.filter((task) =>
+    task.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <>
-      <Header />
+      <Header search={search} setSearch={setSearch} />
 
       <div className="container">
         <Sidebar />
 
-        <main>
+        <main className="main-content">
           <Dashboard tasks={tasks} />
 
           <TaskForm addTask={addTask} />
 
-          <TaskTable tasks={tasks} />
+          <TaskTable
+            tasks={filteredTasks}
+            deleteTask={deleteTask}
+          />
         </main>
       </div>
 

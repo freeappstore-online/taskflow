@@ -1,6 +1,6 @@
 import "./Header.css";
 
-function Header() {
+function Header({ search, setSearch }) {
   return (
     <header className="header">
       <div className="logo">
@@ -11,6 +11,8 @@ function Header() {
         <input
           type="search"
           placeholder="Search tasks..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 

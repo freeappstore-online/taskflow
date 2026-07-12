@@ -1,12 +1,13 @@
 .header {
+  height: 70px;
+  background: #2563eb;
+  color: white;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  padding: 20px 30px;
-
-  background: #2563eb;
-  color: white;
+  padding: 0 30px;
 }
 
 .logo h1 {
@@ -14,20 +15,27 @@
 }
 
 .search input {
-  width: 300px;
-  padding: 10px;
+  width: 320px;
+  padding: 10px 15px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
+  outline: none;
 }
 
 .header-actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .header-actions button {
-  padding: 10px 14px;
+  background: white;
+  color: #2563eb;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.header-actions button:hover {
+  background: #e5e7eb;
 }

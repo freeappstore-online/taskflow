@@ -5,15 +5,30 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #f3f4f6;
+  background: #f4f6f9;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
 }
 
 .container {
   display: flex;
 }
 
-main {
+.main-content {
   flex: 1;
   padding: 30px;
+}
+
+button {
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+section {
+  margin-bottom: 30px;
 }

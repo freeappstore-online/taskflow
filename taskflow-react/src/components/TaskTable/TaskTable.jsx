@@ -1,8 +1,8 @@
 import "./TaskTable.css";
 
-function TaskTable({ tasks }) {
+function TaskTable({ tasks, deleteTask }) {
   return (
-    <section>
+    <section className="task-table">
       <h2>Task List</h2>
 
       <table>
@@ -13,13 +13,16 @@ function TaskTable({ tasks }) {
             <th>Status</th>
             <th>Due Date</th>
             <th>Assignee</th>
+            <th>Actions</th>
           </tr>
         </thead>
 
         <tbody>
           {tasks.length === 0 ? (
             <tr>
-              <td colSpan="5">No tasks available.</td>
+              <td colSpan="6" className="empty">
+                No Tasks Found
+              </td>
             </tr>
           ) : (
             tasks.map((task) => (
@@ -29,6 +32,15 @@ function TaskTable({ tasks }) {
                 <td>{task.status}</td>
                 <td>{task.dueDate}</td>
                 <td>{task.assignee}</td>
+
+                <td>
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteTask(task.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))
           )}
