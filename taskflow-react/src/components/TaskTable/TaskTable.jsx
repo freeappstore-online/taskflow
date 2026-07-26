@@ -1,12 +1,11 @@
 import "./TaskTable.css";
 
-function TaskTable({ tasks, deleteTask, clearAllTasks }) {
+function TaskTable({ tasks, deleteTask, editTask, clearAllTasks }) {
   return (
     <section className="task-table">
-      <h2>Task List</h2>
+      {/* <h2>Task List</h2> */}
       <div className="table-header">
         <h2>Task List</h2>
-
         <button className="clear-btn" onClick={clearAllTasks}>
           Clear All
         </button>
@@ -40,6 +39,10 @@ function TaskTable({ tasks, deleteTask, clearAllTasks }) {
                 <td>{task.assignee}</td>
 
                 <td>
+                  <button className="edit-btn" onClick={() => editTask(task)}>
+                    Edit
+                  </button>
+
                   <button
                     className="delete-btn"
                     onClick={() => deleteTask(task.id)}
