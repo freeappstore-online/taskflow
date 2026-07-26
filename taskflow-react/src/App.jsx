@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
@@ -8,7 +8,14 @@ import TaskTable from "./components/TaskTable/TaskTable";
 import Footer from "./components/Footer/Footer";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+  const savedTasks = localStorage.getItem("tasks");
+
+  return savedTasks ? JSON.parse(savedTasks) : [];
+});
+useEffect(() => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}, [tasks]);
 
   const [search, setSearch] = useState("");
 
@@ -31,25 +38,34 @@ function App() {
     task.title.toLowerCase().includes(search.toLowerCase())
   );
 
+  const clearAllTasks = () => {
+  const confirmed = window.confirm(
+    "Are you sure you want to delete all tasks?"
+  );
+
+  if (!confirmed) return;
+
+  setTasks([]);
+};
+
   return (
     <>
       <Header search={search} setSearch={setSearch} />
 
       <div className="container">
         <Sidebar />
-
         <main className="main-content">
           <Dashboard tasks={tasks} />
 
           <TaskForm addTask={addTask} />
 
           <TaskTable
-            tasks={filteredTasks}
-            deleteTask={deleteTask}
-          />
+  tasks={filteredTasks}
+  deleteTask={deleteTask}
+  clearAllTasks={clearAllTasks}
+/>
         </main>
       </div>
-
       <Footer />
     </>
   );

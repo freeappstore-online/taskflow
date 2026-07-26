@@ -1,10 +1,16 @@
 import "./TaskTable.css";
 
-function TaskTable({ tasks, deleteTask }) {
+function TaskTable({ tasks, deleteTask, clearAllTasks }) {
   return (
     <section className="task-table">
       <h2>Task List</h2>
+      <div className="table-header">
+        <h2>Task List</h2>
 
+        <button className="clear-btn" onClick={clearAllTasks}>
+          Clear All
+        </button>
+      </div>
       <table>
         <thead>
           <tr>
