@@ -1,0 +1,20 @@
+.priority{
+padding:6px 14px;
+border-radius:30px;
+font-weight:bold;
+}
+
+.high{
+background:#fecaca;
+color:#991b1b;
+}
+
+.medium{
+background:#fde68a;
+color:#92400e;
+}
+
+.low{
+background:#d1fae5;
+color:#065f46;
+}

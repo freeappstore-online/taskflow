@@ -1,4 +1,6 @@
 import "./TaskTable.css";
+import StatusBadge from "../StatusBadge/StatusBadge";
+import PriorityBadge from "../PriorityBadge/PriorityBadge";
 
 function TaskTable({ tasks, deleteTask, editTask, clearAllTasks }) {
   return (

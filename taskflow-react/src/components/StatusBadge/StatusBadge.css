@@ -1,0 +1,21 @@
+.status {
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.progress {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.todo {
+  background: #fee2e2;
+  color: #b91c1c;
+}
