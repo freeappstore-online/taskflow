@@ -1,33 +1,29 @@
 .card {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  background: var(--card-color);
+  color: var(--text-color);
 
-  background: white;
+  border: 1px solid var(--border-color);
+  border-left-width: 6px;
 
+  border-radius: 12px;
   padding: 20px;
 
-  border-radius: 10px;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
 
-  box-shadow: 0 4px 10px rgba(0,0,0,.08);
+  transition: all 0.3s ease;
 }
 
-.card-icon {
-
-  font-size: 40px;
-
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-.card-content h3 {
-
-  margin-bottom: 8px;
-
+.card h3 {
+  margin-bottom: 12px;
+  color: var(--text-color);
 }
 
-.card-content p{
-
-  font-size:28px;
-
-  font-weight:bold;
-
+.card p {
+  font-size: 38px;
+  font-weight: bold;
 }

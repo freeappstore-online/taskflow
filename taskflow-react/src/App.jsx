@@ -19,11 +19,27 @@ function App() {
 
   // Editing state
   const [editingTask, setEditingTask] = useState(null);
+  
+  // 🌙 Dark Mode State
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
 
   // Save tasks whenever they change
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+    // Save Theme
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.body.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
 
   // Add new task
   const addTask = (newTask) => {
@@ -86,6 +102,9 @@ function App() {
       <Header
         search={search}
         setSearch={setSearch}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+
       />
 
       <div className="container">

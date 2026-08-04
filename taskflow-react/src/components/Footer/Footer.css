@@ -1,6 +1,33 @@
 .footer {
+  background: var(--accent-color);
+  color: white;
+
   text-align: center;
   padding: 20px;
-  background: #2563eb;
+
+  margin-top: 30px;
+
+  transition: all 0.3s ease;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.footer a {
   color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 15px;
+    font-size: 14px;
+  }
 }
