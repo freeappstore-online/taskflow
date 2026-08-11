@@ -16,7 +16,8 @@ function App() {
 
   // Search state
   const [search, setSearch] = useState("");
-
+//
+const [sortBy, setSortBy] = useState("default");
   // Editing state
   const [editingTask, setEditingTask] = useState(null);
   
@@ -95,32 +96,83 @@ const [priorityFilter, setPriorityFilter] = useState("All");
     setTasks([]);
     setEditingTask(null);
   };
+const getPriorityValue = (priority) => {
+  switch (priority) {
+    case "High":
+      return 3;
 
+    case "Medium":
+      return 2;
+
+    case "Low":
+      return 1;
+
+    default:
+      return 0;
+  }
+};
   // Search filter
- const filteredTasks = tasks.filter((task) => {
-  const matchesSearch = task.title
-    .toLowerCase()
-    .includes(search.toLowerCase());
+ const filteredTasks = tasks
+  .filter((task) => {
+    const matchesSearch = task.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
-  const matchesCategory =
-    categoryFilter === "All" ||
-    task.category === categoryFilter;
+    const matchesCategory =
+      categoryFilter === "All" ||
+      task.category === categoryFilter;
 
-  const matchesStatus =
-    statusFilter === "All" ||
-    task.status === statusFilter;
+    const matchesStatus =
+      statusFilter === "All" ||
+      task.status === statusFilter;
 
-  const matchesPriority =
-    priorityFilter === "All" ||
-    task.priority === priorityFilter;
+    const matchesPriority =
+      priorityFilter === "All" ||
+      task.priority === priorityFilter;
 
-  return (
-    matchesSearch &&
-    matchesCategory &&
-    matchesStatus &&
-    matchesPriority
-  );
-});
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesStatus &&
+      matchesPriority
+    );
+  })
+  .sort((a, b) => {
+    switch (sortBy) {
+      case "title-asc":
+        return a.title.localeCompare(b.title);
+
+      case "title-desc":
+        return b.title.localeCompare(a.title);
+
+      case "due-asc":
+        return (
+          new Date(a.dueDate || "9999-12-31") -
+          new Date(b.dueDate || "9999-12-31")
+        );
+
+      case "due-desc":
+        return (
+          new Date(b.dueDate || "0000-01-01") -
+          new Date(a.dueDate || "0000-01-01")
+        );
+
+      case "priority-high":
+        return (
+          getPriorityValue(b.priority) -
+          getPriorityValue(a.priority)
+        );
+
+      case "priority-low":
+        return (
+          getPriorityValue(a.priority) -
+          getPriorityValue(b.priority)
+        );
+
+      default:
+        return 0;
+    }
+  });
 
   return (
     <>
@@ -144,7 +196,7 @@ const [priorityFilter, setPriorityFilter] = useState("All");
             editingTask={editingTask}
           />
 
-         <TaskTable
+   <TaskTable
   tasks={filteredTasks}
   deleteTask={deleteTask}
   editTask={editTask}
@@ -155,6 +207,8 @@ const [priorityFilter, setPriorityFilter] = useState("All");
   setStatusFilter={setStatusFilter}
   priorityFilter={priorityFilter}
   setPriorityFilter={setPriorityFilter}
+  sortBy={sortBy}
+  setSortBy={setSortBy}
 />
         </main>
       </div>

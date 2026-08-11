@@ -168,8 +168,13 @@ button:active {
   transition: all 0.3s ease;
 }
 
+.filters select:hover {
+  border-color: var(--accent-color);
+}
+
 .filters select:focus {
   border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
 @media (max-width: 768px) {

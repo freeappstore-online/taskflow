@@ -1,9 +1,8 @@
 import "./TaskTable.css";
 import StatusBadge from "../StatusBadge/StatusBadge";
 import PriorityBadge from "../PriorityBadge/PriorityBadge";
-
 function TaskTable({
-    tasks,
+  tasks,
   deleteTask,
   editTask,
   clearAllTasks,
@@ -13,7 +12,8 @@ function TaskTable({
   setStatusFilter,
   priorityFilter,
   setPriorityFilter,
-
+  sortBy,
+  setSortBy,
 }) {
   return (
     <section className="task-table">
@@ -62,6 +62,18 @@ function TaskTable({
     <option value="Medium">Medium</option>
     <option value="Low">Low</option>
   </select>
+  <select
+  value={sortBy}
+  onChange={(e) => setSortBy(e.target.value)}
+>
+  <option value="default">Sort By</option>
+  <option value="title-asc">Title: A → Z</option>
+  <option value="title-desc">Title: Z → A</option>
+  <option value="due-asc">Due Date: Earliest</option>
+  <option value="due-desc">Due Date: Latest</option>
+  <option value="priority-high">Priority: High → Low</option>
+  <option value="priority-low">Priority: Low → High</option>
+</select>
 </div>
       {tasks.length === 0 ? (
         <div className="empty-state">
