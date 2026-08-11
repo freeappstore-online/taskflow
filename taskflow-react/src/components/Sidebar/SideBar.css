@@ -87,3 +87,40 @@
     justify-content: center;
   }
 }
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+
+    padding: 15px;
+
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .sidebar h2 {
+    display: none;
+  }
+
+  .sidebar nav ul {
+    display: flex;
+
+    gap: 8px;
+
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+  }
+
+  .sidebar nav li {
+    flex: 0 0 auto;
+
+    margin-bottom: 0;
+  }
+
+  .sidebar nav a {
+    white-space: nowrap;
+
+    padding: 9px 12px;
+  }
+}

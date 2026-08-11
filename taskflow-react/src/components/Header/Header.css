@@ -1,91 +1,101 @@
 .header {
-  height: 70px;
-  background: var(--accent-color);
+  min-height: 70px;
+
+  background: #2563eb;
   color: white;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 20px;
 
-  padding: 0 30px;
+  padding: 12px 30px;
+
+  flex-wrap: wrap;
+}
+
+.logo {
+  flex-shrink: 0;
 }
 
 .logo h1 {
   font-size: 28px;
 }
 
-.search input {
-  width: 320px;
-  padding: 10px 15px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  outline: none;
-
-  background: var(--card-color);
-  color: var(--text-color);
+.search {
+  flex: 1;
+  min-width: 200px;
 }
 
-.search input::placeholder {
-  color: #9ca3af;
+.search input {
+  width: 100%;
+
+  padding: 10px 15px;
+
+  border: none;
+  border-radius: 8px;
+
+  outline: none;
 }
 
 .header-actions {
   display: flex;
+  gap: 8px;
   align-items: center;
-  gap: 12px;
 }
 
-.header-actions button {
-  background: var(--card-color);
-  color: var(--accent-color);
-  border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.header-actions button:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
-}
-
-/* Dark Mode Button */
-
+.header-actions button,
 .theme-btn {
-  background: var(--card-color);
-  color: var(--accent-color);
+  background: white;
+  color: #2563eb;
+
   border: none;
-  padding: 10px 16px;
+
+  padding: 9px 12px;
+
   border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s ease;
+
+  font-size: 14px;
+
+  transition: all 0.2s ease;
 }
 
+.header-actions button:hover,
 .theme-btn:hover {
+  background: #e5e7eb;
+
   transform: translateY(-2px);
-  opacity: 0.9;
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .header {
+    padding: 12px 20px;
+  }
+
+  .search {
+    order: 3;
+    flex-basis: 100%;
+  }
 }
 
 /* Mobile */
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .header {
-    flex-wrap: wrap;
-    height: auto;
-    gap: 15px;
-    padding: 20px;
+    gap: 10px;
+    padding: 12px 15px;
   }
 
-  .search input {
-    width: 100%;
+  .logo h1 {
+    font-size: 24px;
   }
 
-  .header-actions {
-    width: 100%;
-    justify-content: flex-end;
-    flex-wrap: wrap;
+  .header-actions button {
+    padding: 8px 10px;
+  }
+
+  .header-actions button:last-child {
+    display: none;
   }
 }
