@@ -20,6 +20,14 @@ function Dashboard({ tasks }) {
     (task) => task.priority === "High"
   ).length;
 
+  const mediumPriority = tasks.filter(
+    (task) => task.priority === "Medium"
+  ).length;
+
+  const lowPriority = tasks.filter(
+    (task) => task.priority === "Low"
+  ).length;
+
   const today = new Date().toISOString().split("T")[0];
 
   const dueToday = tasks.filter(
@@ -34,21 +42,67 @@ function Dashboard({ tasks }) {
   ).length;
 
   const progress =
-    total === 0 ? 0 : Math.round((completed / total) * 100);
+    total === 0
+      ? 0
+      : Math.round((completed / total) * 100);
+
+  // Category statistics
+  const categories = [
+    "Development",
+    "Design",
+    "Testing",
+    "Documentation",
+    "Bug",
+    "Meeting",
+  ];
+
+  const categoryStats = categories.map((category) => ({
+    name: category,
+    count: tasks.filter(
+      (task) => task.category === category
+    ).length,
+  }));
 
   return (
     <section className="dashboard">
       <h2>Dashboard Overview</h2>
 
+      {/* Main Cards */}
+
       <div className="cards">
-        <Card title="Total Tasks" value={total} color="#2563eb" />
-        <Card title="Completed" value={completed} color="#22c55e" />
-        <Card title="In Progress" value={inProgress} color="#f59e0b" />
-        <Card title="To Do" value={todo} color="#ef4444" />
+        <Card
+          title="Total Tasks"
+          value={total}
+          color="#2563eb"
+        />
+
+        <Card
+          title="Completed"
+          value={completed}
+          color="#22c55e"
+        />
+
+        <Card
+          title="In Progress"
+          value={inProgress}
+          color="#f59e0b"
+        />
+
+        <Card
+          title="To Do"
+          value={todo}
+          color="#ef4444"
+        />
       </div>
 
+      {/* Progress */}
+
       <div className="progress-section">
-        <h3>Project Progress</h3>
+        <div className="progress-header">
+          <h3>Project Progress</h3>
+
+          <strong>{progress}%</strong>
+        </div>
 
         <div className="progress-bar">
           <div
@@ -57,8 +111,12 @@ function Dashboard({ tasks }) {
           ></div>
         </div>
 
-        <p>{progress}% Completed</p>
+        <p>
+          {completed} of {total} tasks completed
+        </p>
       </div>
+
+      {/* Statistics */}
 
       <div className="stats-grid">
         <div className="stat-box">
@@ -67,7 +125,17 @@ function Dashboard({ tasks }) {
         </div>
 
         <div className="stat-box">
-          <h4>⚠ Overdue</h4>
+          <h4>🟠 Medium Priority</h4>
+          <p>{mediumPriority}</p>
+        </div>
+
+        <div className="stat-box">
+          <h4>🟢 Low Priority</h4>
+          <p>{lowPriority}</p>
+        </div>
+
+        <div className="stat-box">
+          <h4>⚠️ Overdue</h4>
           <p>{overdue}</p>
         </div>
 
@@ -77,11 +145,47 @@ function Dashboard({ tasks }) {
         </div>
       </div>
 
+      {/* Category Statistics */}
+
+      <div className="category-section">
+        <h3>Tasks by Category</h3>
+
+        <div className="category-grid">
+          {categoryStats.map((category) => (
+            <div
+              className="category-item"
+              key={category.name}
+            >
+              <div className="category-info">
+                <span>{category.name}</span>
+                <strong>{category.count}</strong>
+              </div>
+
+              <div className="category-progress">
+                <div
+                  className="category-progress-fill"
+                  style={{
+                    width:
+                      total === 0
+                        ? "0%"
+                        : `${(category.count / total) * 100}%`,
+                  }}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Recent Activity */}
+
       <div className="activity">
         <h3>Recent Activity</h3>
 
         {tasks.length === 0 ? (
-          <p>No recent activity.</p>
+          <p className="no-activity">
+            No recent activity.
+          </p>
         ) : (
           <ul>
             {tasks
@@ -89,7 +193,11 @@ function Dashboard({ tasks }) {
               .reverse()
               .map((task) => (
                 <li key={task.id}>
-                  {task.title} ({task.status})
+                  <strong>{task.title}</strong>
+
+                  <span>
+                    {task.status}
+                  </span>
                 </li>
               ))}
           </ul>
