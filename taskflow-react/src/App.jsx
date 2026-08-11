@@ -96,6 +96,14 @@ const [priorityFilter, setPriorityFilter] = useState("All");
     setTasks([]);
     setEditingTask(null);
   };
+  //clear filters
+ const clearFilters = () => {
+  setSearch("");
+  setCategoryFilter("All");
+  setStatusFilter("All");
+  setPriorityFilter("All");
+  setSortBy("default");
+};
 const getPriorityValue = (priority) => {
   switch (priority) {
     case "High":
@@ -209,6 +217,8 @@ const getPriorityValue = (priority) => {
   setPriorityFilter={setPriorityFilter}
   sortBy={sortBy}
   setSortBy={setSortBy}
+  clearFilters={clearFilters}
+
 />
         </main>
       </div>

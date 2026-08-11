@@ -152,6 +152,17 @@ button:active {
   flex-wrap: wrap;
 }
 
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters select,
+  .clear-filters-btn {
+    width: 100%;
+  }
+}
+
 .filters select {
   min-width: 180px;
   padding: 10px 14px;
@@ -185,4 +196,25 @@ button:active {
   .filters select {
     width: 100%;
   }
+}
+
+.clear-filters-btn {
+  background: transparent;
+  color: var(--accent-color);
+
+  border: 1px solid var(--accent-color);
+  padding: 10px 16px;
+
+  border-radius: 8px;
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: all 0.3s ease;
+}
+
+.clear-filters-btn:hover {
+  background: var(--accent-color);
+  color: white;
+  transform: translateY(-2px);
 }

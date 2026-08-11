@@ -14,6 +14,7 @@ function TaskTable({
   setPriorityFilter,
   sortBy,
   setSortBy,
+  clearFilters,
 }) {
   return (
     <section className="task-table">
@@ -74,12 +75,31 @@ function TaskTable({
   <option value="priority-high">Priority: High → Low</option>
   <option value="priority-low">Priority: Low → High</option>
 </select>
+<button
+    type="button"
+    className="clear-filters-btn"
+    onClick={clearFilters}
+  >
+    🔄 Clear Filters
+  </button>
+
 </div>
       {tasks.length === 0 ? (
-        <div className="empty-state">
-          <h3>📋 No Tasks Yet</h3>
-          <p>Create your first task to start managing your work.</p>
-        </div>
+  <div className="empty-state">
+    <h3>🔍 No matching tasks</h3>
+    <p>
+      Try changing your search or filters.
+    </p>
+
+    <button
+      type="button"
+      className="clear-filters-btn"
+      onClick={clearFilters}
+    >
+      Clear Filters
+    </button>
+  </div>
+
       ) : (
         
         <table>
