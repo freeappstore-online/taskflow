@@ -24,6 +24,10 @@ function App() {
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
   });
+  //Advance filtering
+  const [categoryFilter, setCategoryFilter] = useState("All");
+const [statusFilter, setStatusFilter] = useState("All");
+const [priorityFilter, setPriorityFilter] = useState("All");
 
   // Save tasks whenever they change
   useEffect(() => {
@@ -93,9 +97,30 @@ function App() {
   };
 
   // Search filter
-  const filteredTasks = tasks.filter((task) =>
-    task.title.toLowerCase().includes(search.toLowerCase())
+ const filteredTasks = tasks.filter((task) => {
+  const matchesSearch = task.title
+    .toLowerCase()
+    .includes(search.toLowerCase());
+
+  const matchesCategory =
+    categoryFilter === "All" ||
+    task.category === categoryFilter;
+
+  const matchesStatus =
+    statusFilter === "All" ||
+    task.status === statusFilter;
+
+  const matchesPriority =
+    priorityFilter === "All" ||
+    task.priority === priorityFilter;
+
+  return (
+    matchesSearch &&
+    matchesCategory &&
+    matchesStatus &&
+    matchesPriority
   );
+});
 
   return (
     <>
@@ -119,12 +144,18 @@ function App() {
             editingTask={editingTask}
           />
 
-          <TaskTable
-            tasks={filteredTasks}
-            deleteTask={deleteTask}
-            editTask={editTask}
-            clearAllTasks={clearAllTasks}
-          />
+         <TaskTable
+  tasks={filteredTasks}
+  deleteTask={deleteTask}
+  editTask={editTask}
+  clearAllTasks={clearAllTasks}
+  categoryFilter={categoryFilter}
+  setCategoryFilter={setCategoryFilter}
+  statusFilter={statusFilter}
+  setStatusFilter={setStatusFilter}
+  priorityFilter={priorityFilter}
+  setPriorityFilter={setPriorityFilter}
+/>
         </main>
       </div>
 

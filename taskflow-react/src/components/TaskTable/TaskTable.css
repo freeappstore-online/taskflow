@@ -144,3 +144,40 @@ button:active {
     min-width: 850px;
   }
 }
+
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filters select {
+  min-width: 180px;
+  padding: 10px 14px;
+
+  background: var(--card-color);
+  color: var(--text-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+
+  outline: none;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.filters select:focus {
+  border-color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters select {
+    width: 100%;
+  }
+}

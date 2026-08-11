@@ -3,10 +3,17 @@ import StatusBadge from "../StatusBadge/StatusBadge";
 import PriorityBadge from "../PriorityBadge/PriorityBadge";
 
 function TaskTable({
-  tasks,
+    tasks,
   deleteTask,
   editTask,
   clearAllTasks,
+  categoryFilter,
+  setCategoryFilter,
+  statusFilter,
+  setStatusFilter,
+  priorityFilter,
+  setPriorityFilter,
+
 }) {
   return (
     <section className="task-table">
@@ -22,13 +29,47 @@ function TaskTable({
           </button>
         )}
       </div>
+<div className="filters">
+  <select
+    value={categoryFilter}
+    onChange={(e) => setCategoryFilter(e.target.value)}
+  >
+    <option value="All">All Categories</option>
+    <option value="Development">Development</option>
+    <option value="Design">Design</option>
+    <option value="Testing">Testing</option>
+    <option value="Documentation">Documentation</option>
+    <option value="Bug">Bug</option>
+    <option value="Meeting">Meeting</option>
+  </select>
 
+  <select
+    value={statusFilter}
+    onChange={(e) => setStatusFilter(e.target.value)}
+  >
+    <option value="All">All Statuses</option>
+    <option value="To Do">To Do</option>
+    <option value="In Progress">In Progress</option>
+    <option value="Completed">Completed</option>
+  </select>
+
+  <select
+    value={priorityFilter}
+    onChange={(e) => setPriorityFilter(e.target.value)}
+  >
+    <option value="All">All Priorities</option>
+    <option value="High">High</option>
+    <option value="Medium">Medium</option>
+    <option value="Low">Low</option>
+  </select>
+</div>
       {tasks.length === 0 ? (
         <div className="empty-state">
           <h3>📋 No Tasks Yet</h3>
           <p>Create your first task to start managing your work.</p>
         </div>
       ) : (
+        
         <table>
           <thead>
             <tr>
