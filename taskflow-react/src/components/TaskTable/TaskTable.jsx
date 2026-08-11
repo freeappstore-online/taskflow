@@ -86,91 +86,103 @@ function TaskTable({
 </div>
       {tasks.length === 0 ? (
   <div className="empty-state">
-    <h3>🔍 No matching tasks</h3>
-    <p>
-      Try changing your search or filters.
-    </p>
+  <div className="empty-icon">📋</div>
 
-    <button
-      type="button"
-      className="clear-filters-btn"
-      onClick={clearFilters}
-    >
-      Clear Filters
-    </button>
-  </div>
+  <h3>No tasks found</h3>
+
+  <p>
+    Try changing your search or filters,
+    or create a new task.
+  </p>
+
+  <button
+    className="clear-filters-btn"
+    onClick={clearFilters}
+  >
+    Clear Filters
+  </button>
+</div>
 
       ) : (
         
         <table>
           <thead>
-            <tr>
-              <th>Title</th>
-              <th>Assignee</th>
-              <th>Email</th>
-              <th>Category</th>
-              <th>Priority</th>
-              <th>Status</th>
-              <th>Due Date</th>
-              <th>Description</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+  <tr>
+    <th>Task</th>
+    <th>Category</th>
+    <th>Priority</th>
+    <th>Status</th>
+    <th>Due Date</th>
+    <th>Actions</th>
+  </tr>
+</thead>
 
-          <tbody>
-            {tasks.map((task) => (
-              <tr key={task.id}>
-                <td>{task.title}</td>
+         <tbody>
+  {tasks.map((task) => (
+    <tr key={task.id}>
+      <td>{task.title}</td>
 
-                <td>{task.assignee}</td>
+      <td>
+        <span className="category-badge">
+          {task.category || "Other"}
+        </span>
+      </td>
 
-                <td>{task.email}</td>
+      <td>
+        <span
+          className={`priority-badge ${task.priority
+            ?.toLowerCase()
+            .replace(" ", "-")}`}
+        >
+          {task.priority}
+        </span>
+      </td>
 
-                <td>{task.category}</td>
+      <td>
+        <span
+          className={`status-badge ${task.status
+            ?.toLowerCase()
+            .replace(" ", "-")}`}
+        >
+          {task.status}
+        </span>
+      </td>
 
-                <td>
-                  <PriorityBadge
-                    priority={task.priority}
-                  />
-                </td>
+      <td>
+        {task.dueDate ? (
+          <span
+            className={
+              task.dueDate < new Date().toISOString().split("T")[0] &&
+              task.status !== "Completed"
+                ? "overdue-date"
+                : ""
+            }
+          >
+            {task.dueDate}
+          </span>
+        ) : (
+          "No date"
+        )}
+      </td>
 
-                <td>
-                  <StatusBadge
-                    status={task.status}
-                  />
-                </td>
+      <td>
+        <button
+          className="edit-btn"
+          onClick={() => editTask(task)}
+        >
+          Edit
+        </button>
 
-                <td>{task.dueDate}</td>
-
-                <td>{task.description}</td>
-
-                <td className="action-buttons">
-                  <button
-                    className="edit-btn"
-                    onClick={() => editTask(task)}
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    className="delete-btn"
-                    onClick={() => {
-                      const confirmDelete =
-                        window.confirm(
-                          "Delete this task?"
-                        );
-
-                      if (confirmDelete) {
-                        deleteTask(task.id);
-                      }
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+        <button
+          className="delete-btn"
+          onClick={() => deleteTask(task.id)}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
         </table>
       )}
     </section>

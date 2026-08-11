@@ -78,34 +78,38 @@ button:active {
 }
 
 /* Edit Button */
+.edit-btn,
+.delete-btn {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 7px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
 
 .edit-btn {
   background: var(--accent-color);
   color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
   margin-right: 8px;
-  cursor: pointer;
 }
 
 .edit-btn:hover {
   background: #1d4ed8;
+  transform: translateY(-2px);
 }
 
-/* Delete Button */
-
 .delete-btn {
-  background: #dc2626;
+  background: #ef4444;
   color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
 .delete-btn:hover {
-  background: #b91c1c;
+  background: #dc2626;
+  transform: translateY(-2px);
 }
 
 /* Clear Button */
@@ -217,4 +221,122 @@ button:active {
   background: var(--accent-color);
   color: white;
   transform: translateY(-2px);
+}
+
+/* Category Badge */
+
+.category-badge {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--accent-color);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Status Badge */
+
+.status-badge {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* To Do */
+
+.status-badge.to-do {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+/* In Progress */
+
+.status-badge.in-progress {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+
+/* Completed */
+
+.status-badge.completed {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+/* Priority Badge */
+
+.priority-badge {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* High */
+
+.priority-badge.high {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+/* Medium */
+
+.priority-badge.medium {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+
+/* Low */
+
+.priority-badge.low {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+/* Overdue */
+
+.overdue-date {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.overdue-date::before {
+  content: "⚠ ";
+}
+
+.task-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.task-table tbody tr:hover {
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.empty-state h3 {
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.empty-state p {
+  color: #9ca3af;
+  margin-bottom: 20px;
 }
