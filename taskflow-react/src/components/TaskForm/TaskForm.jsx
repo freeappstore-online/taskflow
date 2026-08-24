@@ -1,22 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./TaskForm.css";
 
 function TaskForm({ addTask, updateTask, editingTask }) {
   const initialTask = {
     title: "",
-    description: "",
+    category: "Development",
     priority: "Medium",
     status: "To Do",
     dueDate: "",
-    assignee: "",
-    email: "",
+    description: "",
   };
 
   const [task, setTask] = useState(initialTask);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (editingTask) {
       setTask(editingTask);
+      setErrors({});
     } else {
       setTask(initialTask);
     }
@@ -25,14 +26,53 @@ function TaskForm({ addTask, updateTask, editingTask }) {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setTask((prevTask) => ({
-      ...prevTask,
+    setTask((previousTask) => ({
+      ...previousTask,
       [name]: value,
     }));
+
+    // Remove the error when the user starts fixing the field
+    setErrors((previousErrors) => ({
+      ...previousErrors,
+      [name]: "",
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!task.title.trim()) {
+      newErrors.title = "Please enter a task title.";
+    }
+
+    if (!task.category) {
+      newErrors.category = "Please select a category.";
+    }
+
+    if (!task.priority) {
+      newErrors.priority = "Please select a priority.";
+    }
+
+    if (!task.status) {
+      newErrors.status = "Please select a status.";
+    }
+
+    if (!task.dueDate) {
+      newErrors.dueDate = "Please select a due date.";
+    }
+
+    return newErrors;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
     if (editingTask) {
       updateTask(task);
@@ -41,11 +81,16 @@ function TaskForm({ addTask, updateTask, editingTask }) {
     }
 
     setTask(initialTask);
+    setErrors({});
   };
 
   const handleCancel = () => {
     setTask(initialTask);
-    updateTask(null);
+    setErrors({});
+
+    if (editingTask) {
+      updateTask(null);
+    }
   };
 
   return (
@@ -54,10 +99,14 @@ function TaskForm({ addTask, updateTask, editingTask }) {
         {editingTask ? "Edit Task" : "Create New Task"}
       </h2>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <div className="form-grid">
-          <div>
-            <label htmlFor="title">Task Title</label>
+
+          {/* Task Title */}
+          <div className="form-group">
+            <label htmlFor="title">
+              Task Title *
+            </label>
 
             <input
               id="title"
@@ -66,51 +115,54 @@ function TaskForm({ addTask, updateTask, editingTask }) {
               value={task.title}
               onChange={handleChange}
               placeholder="Enter task title"
-              required
+              className={errors.title ? "input-error" : ""}
             />
+
+            {errors.title && (
+              <small className="error-message">
+                {errors.title}
+              </small>
+            )}
           </div>
 
-          <div>
-            <label htmlFor="assignee">Assignee</label>
+          {/* Category */}
+          <div className="form-group">
+            <label htmlFor="category">
+              Category *
+            </label>
 
-            <input
-              id="assignee"
-              type="text"
-              name="assignee"
-              value={task.assignee}
+            <select
+              id="category"
+              name="category"
+              value={task.category}
               onChange={handleChange}
-              placeholder="Assign task"
-              required
-            />
+            >
+              <option value="Development">
+                Development
+              </option>
+              <option value="Design">
+                Design
+              </option>
+              <option value="Testing">
+                Testing
+              </option>
+              <option value="Documentation">
+                Documentation
+              </option>
+              <option value="Bug">
+                Bug
+              </option>
+              <option value="Meeting">
+                Meeting
+              </option>
+            </select>
           </div>
 
-          <div>
-            <label htmlFor="email">Email</label>
-
-            <input
-              id="email"
-              type="email"
-              name="email"
-              value={task.email}
-              onChange={handleChange}
-              placeholder="name@example.com"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="dueDate">Due Date</label>
-
-            <input
-              id="dueDate"
-              type="date"
-              name="dueDate"
-              value={task.dueDate}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="priority">Priority</label>
+          {/* Priority */}
+          <div className="form-group">
+            <label htmlFor="priority">
+              Priority *
+            </label>
 
             <select
               id="priority"
@@ -124,8 +176,11 @@ function TaskForm({ addTask, updateTask, editingTask }) {
             </select>
           </div>
 
-          <div>
-            <label htmlFor="status">Status</label>
+          {/* Status */}
+          <div className="form-group">
+            <label htmlFor="status">
+              Status *
+            </label>
 
             <select
               id="status"
@@ -142,26 +197,49 @@ function TaskForm({ addTask, updateTask, editingTask }) {
               </option>
             </select>
           </div>
+
+          {/* Due Date */}
+          <div className="form-group">
+            <label htmlFor="dueDate">
+              Due Date *
+            </label>
+
+            <input
+              id="dueDate"
+              type="date"
+              name="dueDate"
+              value={task.dueDate}
+              onChange={handleChange}
+              className={errors.dueDate ? "input-error" : ""}
+            />
+
+            {errors.dueDate && (
+              <small className="error-message">
+                {errors.dueDate}
+              </small>
+            )}
+          </div>
+
         </div>
 
-        <label htmlFor="description">
-          Description
-        </label>
+        {/* Description */}
+        <div className="form-group">
+          <label htmlFor="description">
+            Description
+          </label>
 
-        <textarea
-          id="description"
-          name="description"
-          rows="5"
-          value={task.description}
-          onChange={handleChange}
-          placeholder="Task description..."
-        />
+          <textarea
+            id="description"
+            name="description"
+            value={task.description}
+            onChange={handleChange}
+            placeholder="Add task details (optional)"
+          />
+        </div>
 
-        <div className="button-group">
+        <div className="form-actions">
           <button type="submit">
-            {editingTask
-              ? "Update Task"
-              : "Create Task"}
+            {editingTask ? "Update Task" : "Add Task"}
           </button>
 
           {editingTask && (

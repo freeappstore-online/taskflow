@@ -99,3 +99,31 @@
     width: 100%;
   }
 }
+.form-group {
+  margin-bottom: 5px;
+}
+
+.input-error {
+  border: 2px solid #ef4444 !important;
+}
+
+.error-message {
+  display: block;
+  margin-top: 5px;
+  color: #ef4444;
+  font-size: 13px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  background: #6b7280 !important;
+}
+
+.cancel-btn:hover {
+  background: #4b5563 !important;
+}
