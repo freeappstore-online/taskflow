@@ -16,12 +16,35 @@ function TaskTable({
   setSortBy,
   clearFilters,
   changeTaskStatus,
+   exportTasks,
+  importTasks,
 }) {
   return (
     <section className="task-table">
+      
       <div className="table-header">
+        
         <h2>Task List</h2>
+        
+<div className="backup-actions">
+  <button
+    className="export-btn"
+    onClick={exportTasks}
+    disabled={tasks.length === 0}
+  >
+    📤 Export
+  </button>
 
+  <label className="import-btn">
+    📥 Import
+    <input
+      type="file"
+      accept=".json,application/json"
+      onChange={importTasks}
+      hidden
+    />
+  </label>
+</div>
         {tasks.length > 0 && (
           <button className="clear-btn" onClick={clearAllTasks}>
             Clear All
