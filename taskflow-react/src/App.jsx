@@ -85,6 +85,17 @@ const [priorityFilter, setPriorityFilter] = useState("All");
     setEditingTask(null);
   };
 
+  //change task status
+  const changeTaskStatus = (id, newStatus) => {
+  setTasks((previousTasks) =>
+    previousTasks.map((task) =>
+      task.id === id
+        ? { ...task, status: newStatus }
+        : task
+    )
+  );
+};
+
   // Clear all tasks
   const clearAllTasks = () => {
     const confirmed = window.confirm(
@@ -218,6 +229,9 @@ const getPriorityValue = (priority) => {
   sortBy={sortBy}
   setSortBy={setSortBy}
   clearFilters={clearFilters}
+    changeTaskStatus={changeTaskStatus}
+
+
 
 />
         </main>
