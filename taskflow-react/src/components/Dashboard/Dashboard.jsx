@@ -34,17 +34,44 @@ function Dashboard({ tasks }) {
     (task) => task.dueDate === today
   ).length;
 
-  const overdue = tasks.filter(
+  const overdueTasks = tasks.filter(
     (task) =>
       task.dueDate &&
       task.dueDate < today &&
       task.status !== "Completed"
-  ).length;
+  );
 
-  const progress =
+  const overdue = overdueTasks.length;
+
+  const completionRate =
     total === 0
       ? 0
       : Math.round((completed / total) * 100);
+
+  const overdueRate =
+    total === 0
+      ? 0
+      : Math.round((overdue / total) * 100);
+
+  // Upcoming tasks
+  const upcomingTasks = tasks
+    .filter(
+      (task) =>
+        task.dueDate &&
+        task.dueDate >= today &&
+        task.status !== "Completed"
+    )
+    .sort((a, b) =>
+      a.dueDate.localeCompare(b.dueDate)
+    )
+    .slice(0, 5);
+
+  // High priority unfinished tasks
+  const highPriorityTasks = tasks.filter(
+    (task) =>
+      task.priority === "High" &&
+      task.status !== "Completed"
+  );
 
   // Category statistics
   const categories = [
@@ -101,19 +128,131 @@ function Dashboard({ tasks }) {
         <div className="progress-header">
           <h3>Project Progress</h3>
 
-          <strong>{progress}%</strong>
+          <strong>{completionRate}%</strong>
         </div>
 
         <div className="progress-bar">
           <div
             className="progress-fill"
-            style={{ width: `${progress}%` }}
+            style={{
+              width: `${completionRate}%`,
+            }}
           ></div>
         </div>
 
         <p>
           {completed} of {total} tasks completed
         </p>
+      </div>
+
+      {/* Productivity Insights */}
+
+      <div className="insights-section">
+        <h3>📊 Productivity Insights</h3>
+
+        <div className="insights-grid">
+
+          <div className="insight-box">
+            <span className="insight-icon">
+              ✅
+            </span>
+
+            <div>
+              <h4>Completion Rate</h4>
+              <p>{completionRate}%</p>
+            </div>
+          </div>
+
+          <div className="insight-box">
+            <span className="insight-icon">
+              ⚠️
+            </span>
+
+            <div>
+              <h4>Overdue Rate</h4>
+              <p>{overdueRate}%</p>
+            </div>
+          </div>
+
+          <div className="insight-box">
+            <span className="insight-icon">
+              📅
+            </span>
+
+            <div>
+              <h4>Due Today</h4>
+              <p>{dueToday}</p>
+            </div>
+          </div>
+
+          <div className="insight-box">
+            <span className="insight-icon">
+              🔥
+            </span>
+
+            <div>
+              <h4>High Priority</h4>
+              <p>{highPriorityTasks.length}</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Upcoming Tasks */}
+
+      <div className="upcoming-section">
+        <h3>📅 Upcoming Tasks</h3>
+
+        {upcomingTasks.length === 0 ? (
+          <p className="no-activity">
+            No upcoming tasks.
+          </p>
+        ) : (
+          <ul>
+            {upcomingTasks.map((task) => (
+              <li key={task.id}>
+                <div>
+                  <strong>{task.title}</strong>
+
+                  <small>
+                    {task.category || "Other"}
+                  </small>
+                </div>
+
+                <span>
+                  {task.dueDate}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* High Priority Tasks */}
+
+      <div className="priority-section">
+        <h3>🔥 High Priority Tasks</h3>
+
+        {highPriorityTasks.length === 0 ? (
+          <p className="no-activity">
+            No unfinished high-priority tasks.
+          </p>
+        ) : (
+          <ul>
+            {highPriorityTasks
+              .slice(0, 5)
+              .map((task) => (
+                <li key={task.id}>
+                  <strong>{task.title}</strong>
+
+                  <span>
+                    {task.status}
+                  </span>
+                </li>
+              ))}
+          </ul>
+        )}
       </div>
 
       {/* Statistics */}
@@ -138,11 +277,6 @@ function Dashboard({ tasks }) {
           <h4>⚠️ Overdue</h4>
           <p>{overdue}</p>
         </div>
-
-        <div className="stat-box">
-          <h4>📅 Due Today</h4>
-          <p>{dueToday}</p>
-        </div>
       </div>
 
       {/* Category Statistics */}
@@ -158,7 +292,10 @@ function Dashboard({ tasks }) {
             >
               <div className="category-info">
                 <span>{category.name}</span>
-                <strong>{category.count}</strong>
+
+                <strong>
+                  {category.count}
+                </strong>
               </div>
 
               <div className="category-progress">
@@ -168,7 +305,11 @@ function Dashboard({ tasks }) {
                     width:
                       total === 0
                         ? "0%"
-                        : `${(category.count / total) * 100}%`,
+                        : `${
+                            (category.count /
+                              total) *
+                            100
+                          }%`,
                   }}
                 ></div>
               </div>
