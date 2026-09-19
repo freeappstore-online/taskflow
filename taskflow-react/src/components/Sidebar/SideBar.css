@@ -1,5 +1,5 @@
 .sidebar {
-  width: 250px;
+  width: 240px;
   min-height: calc(100svh - 70px);
 
   background: var(--card-color);
@@ -8,85 +8,74 @@
   padding: 25px;
 
   border-right: 1px solid var(--border-color);
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
 
-  transition: all 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .sidebar h2 {
   margin-bottom: 25px;
   color: var(--text-color);
-  font-size: 28px;
-  font-weight: 700;
 }
 
-.sidebar nav ul {
+.sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.sidebar nav li {
-  margin-bottom: 12px;
+.sidebar li {
+  margin-bottom: 10px;
 }
 
-/* Navigation Links */
+.nav-item {
+  width: 100%;
 
-.sidebar nav a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display: block;
 
-  padding: 12px 16px;
+  padding: 11px 15px;
 
-  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
   color: var(--text-color);
 
-  border-radius: 10px;
+  text-align: left;
 
-  transition: all 0.3s ease;
-}
-
-.sidebar nav a:hover {
-  background: var(--accent-color);
-  color: white;
-  transform: translateX(6px);
-}
-
-.sidebar nav a.active {
-  background: var(--accent-color);
-  color: white;
+  font-size: 15px;
   font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-/* Optional: Active Item */
-
-.sidebar nav li:first-child a {
+.nav-item:hover {
   background: var(--accent-color);
   color: white;
+
+  transform: translateX(5px);
 }
 
-/* Responsive */
+.nav-item.active {
+  background: var(--accent-color);
+  color: white;
 
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    min-height: auto;
-
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-
-    box-shadow: none;
-  }
-
-  .sidebar h2 {
-    text-align: center;
-  }
-
-  .sidebar nav a {
-    justify-content: center;
-  }
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
 }
+
+.nav-item:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 2px;
+}
+
+/* Mobile */
+
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
@@ -104,7 +93,6 @@
 
   .sidebar nav ul {
     display: flex;
-
     gap: 8px;
 
     overflow-x: auto;
@@ -112,15 +100,13 @@
     padding-bottom: 5px;
   }
 
-  .sidebar nav li {
+  .sidebar li {
     flex: 0 0 auto;
-
     margin-bottom: 0;
   }
 
-  .sidebar nav a {
+  .nav-item {
+    width: auto;
     white-space: nowrap;
-
-    padding: 9px 12px;
   }
 }

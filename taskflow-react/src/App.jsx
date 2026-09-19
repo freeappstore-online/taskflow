@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 
 import Header from "./components/Header/Header";
-import Sidebar from "./components/Sidebar/Sidebar";
+import Sidebar from "./components/Sidebar/SideBar";
 import Dashboard from "./components/Dashboard/Dashboard";
 import TaskForm from "./components/TaskForm/TaskForm";
 import TaskTable from "./components/TaskTable/TaskTable";
 import Footer from "./components/Footer/Footer";
 
 function App() {
+  const [activeView, setActiveView] = useState("dashboard");
+  
   // Load tasks from Local Storage
   const [tasks, setTasks] = useState(() => {
     const savedTasks = localStorage.getItem("tasks");
@@ -198,25 +200,38 @@ const importTasks = (event) => {
     }
   };
   // Search filter
-  const filteredTasks = tasks
-    .filter((task) => {
-      const matchesSearch = task.title
-        .toLowerCase()
-        .includes(search.toLowerCase());
+ const filteredTasks = tasks.filter((task) => {
+  const matchesSearch = task.title
+    .toLowerCase()
+    .includes(search.toLowerCase());
 
-      const matchesCategory =
-        categoryFilter === "All" || task.category === categoryFilter;
+  if (!matchesSearch) {
+    return false;
+  }
 
-      const matchesStatus =
-        statusFilter === "All" || task.status === statusFilter;
+  switch (activeView) {
+    case "in-progress":
+      return task.status === "In Progress";
 
-      const matchesPriority =
-        priorityFilter === "All" || task.priority === priorityFilter;
+    case "completed":
+      return task.status === "Completed";
 
-      return (
-        matchesSearch && matchesCategory && matchesStatus && matchesPriority
-      );
-    })
+    case "high-priority":
+      return task.priority === "High" && task.status !== "Completed";
+
+    case "all":
+      return true;
+
+    case "dashboard":
+      return true;
+
+    case "settings":
+      return false;
+
+    default:
+      return true;
+  }
+})
     .sort((a, b) => {
       switch (sortBy) {
         case "title-asc":
@@ -258,19 +273,40 @@ const importTasks = (event) => {
       />
 
       <div className="container">
-        <Sidebar />
+        <Sidebar 
+         activeView={activeView}
+  setActiveView={setActiveView}
+  />
+<main className="main-content">
+  {activeView === "dashboard" && (
+    <Dashboard tasks={tasks} />
+  )}
+   {activeView !== "dashboard" && activeView !== "settings" && (
+    <section className="view-header">
+      <h2>
+        {activeView === "all" && "All Tasks"}
+        {activeView === "in-progress" && "In Progress Tasks"}
+        {activeView === "completed" && "Completed Tasks"}
+        {activeView === "high-priority" && "High Priority Tasks"}
+      </h2>
 
-        <main className="main-content">
-          <Dashboard tasks={tasks} />
+      <p>
+        {filteredTasks.length} task
+        {filteredTasks.length !== 1 ? "s" : ""} found
+      </p>
+    </section>
+  )}
 
-          <TaskForm
-            addTask={addTask}
-            updateTask={updateTask}
-            editingTask={editingTask}
-          />
+  {activeView !== "settings" && (
+    <>
+      <TaskForm
+        addTask={addTask}
+        updateTask={updateTask}
+        editingTask={editingTask}
+      />
 
-          <TaskTable
-            tasks={filteredTasks}
+      <TaskTable
+          tasks={filteredTasks}
             deleteTask={deleteTask}
             editTask={editTask}
             clearAllTasks={clearAllTasks}
@@ -286,8 +322,19 @@ const importTasks = (event) => {
             changeTaskStatus={changeTaskStatus}
              exportTasks={exportTasks}
   importTasks={importTasks}
-          />
-        </main>
+      />
+    </>
+  )}
+
+  {activeView === "settings" && (
+    <section className="settings-placeholder">
+      <h2>Settings</h2>
+      <p>
+        TaskFlow settings will be available here in a future update.
+      </p>
+    </section>
+  )}
+</main>
       </div>
 
       <Footer />

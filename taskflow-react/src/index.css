@@ -121,3 +121,29 @@ textarea {
     scroll-behavior: auto !important;
   }
 }
+
+.view-header {
+  margin-bottom: 25px;
+}
+
+.view-header h2 {
+  margin-bottom: 5px;
+  color: var(--text-color);
+}
+
+.view-header p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.settings-placeholder {
+  background: var(--card-color);
+  color: var(--text-color);
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.settings-placeholder h2 {
+  margin-bottom: 10px;
+}

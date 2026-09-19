@@ -1,19 +1,52 @@
 import "./Sidebar.css";
 
-function Sidebar() {
+function Sidebar({ activeView, setActiveView }) {
+  const menuItems = [
+    {
+      id: "dashboard",
+      label: "📊 Dashboard",
+    },
+    {
+      id: "all",
+      label: "📋 All Tasks",
+    },
+    {
+      id: "in-progress",
+      label: "🔄 In Progress",
+    },
+    {
+      id: "completed",
+      label: "✅ Completed",
+    },
+    {
+      id: "high-priority",
+      label: "🔥 High Priority",
+    },
+    {
+      id: "settings",
+      label: "⚙️ Settings",
+    },
+  ];
+
   return (
     <aside className="sidebar">
-      <h2>Menu</h2>
+      <h2>Navigation</h2>
 
-      <nav>
-         <ul>
-          <li><a href="#" className="active">🏠 Dashboard</a></li>
-          <li><a href="#">✅ My Tasks</a></li>
-          <li><a href="#">📁 Projects</a></li>
-          <li><a href="#">📅 Calendar</a></li>
-          <li><a href="#">👥 Team</a></li>
-          <li><a href="#">📊 Reports</a></li>
-          <li><a href="#">⚙️ Settings</a></li>
+      <nav aria-label="Main navigation">
+        <ul>
+          {menuItems.map((item) => (
+            <li key={item.id}>
+              <button
+                type="button"
+                className={`nav-item ${
+                  activeView === item.id ? "active" : ""
+                }`}
+                onClick={() => setActiveView(item.id)}
+              >
+                {item.label}
+              </button>
+            </li>
+          ))}
         </ul>
       </nav>
     </aside>
